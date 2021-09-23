@@ -33,7 +33,7 @@ intellij {
     version.set(properties("platformVersion"))
     type.set(properties("platformType"))
     downloadSources.set(properties("platformDownloadSources").toBoolean())
-    updateSinceUntilBuild.set(false)
+    updateSinceUntilBuild.set(true)
     sandboxDir.set("$rootDir.path/.idea-sandbox")
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
@@ -52,7 +52,8 @@ tasks {
 //        downloadDir.set("$rootDir.path/IDEA_SDK_HOME")
 //        verificationReportsDir.set("$rootDir.path/reports/pluginVerifier")
 //    }
-    register<Copy>("copyToLib") {
+    register<Copy>("copyDependenciesToLibs") {
+        dependsOn("jar")
         from(configurations.runtimeClasspath)
         into("${buildDir}/libs")
     }
